@@ -18,3 +18,4 @@
 > 点击这个链接 [查询](http://tool.chinaz.com/dns/)
 >
 > 输入要查询的域名 : github.com
+
