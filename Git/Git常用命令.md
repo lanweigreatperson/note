@@ -118,5 +118,41 @@ $ git push origin master
 
 **从远程库克隆**
 
+```
+git clone git@github.com:michaelliao/gitskills.git
+```
 
+**分支管理**
 
+**创建与合并分支**
+
+```
+--创建dev分支，然后切换到dev分支
+$ git checkout -b dev
+Switched to a new branch 'dev'
+--git checkout命令加上-b参数表示创建并切换，相当于以下两条命令
+$ git branch dev
+$ git checkout dev
+Switched to branch 'dev'
+--git branch命令查看当前分支
+$ git branch
+* dev
+  master
+--接下来就可以对分支操作了
+....git add ***、git commit -m....
+--切换回master分支
+$ git checkout master
+Switched to branch 'master'
+--git merge命令用于合并指定分支到当前分支
+$ git merge dev
+Updating d46f35e..b17d20e
+Fast-forward
+ readme.txt | 1 +
+ 1 file changed, 1 insertion(+)
+ --删除dev分支
+ $ git branch -d dev
+Deleted branch dev (was b17d20e).
+--删除后，查看branch，就只剩下master分支
+$ git branch
+* master
+```
