@@ -30,6 +30,31 @@ public class SpringApplication {
 		}
 		return WebApplicationType.SERVLET;
 	}
+    //确定WebApplicationType类型后，调用run方法中将会调用此方法创建应用上下文
+    protected ConfigurableApplicationContext createApplicationContext() {
+		Class<?> contextClass = this.applicationContextClass;
+		if (contextClass == null) {
+			try {
+				switch (this.webApplicationType) {
+				case SERVLET:
+					contextClass = Class.forName(DEFAULT_WEB_CONTEXT_CLASS);
+					break;
+				case REACTIVE:
+					contextClass = Class.forName(DEFAULT_REACTIVE_WEB_CONTEXT_CLASS);
+					break;
+				default:
+					contextClass = Class.forName(DEFAULT_CONTEXT_CLASS);
+				}
+			}
+			catch (ClassNotFoundException ex) {
+				throw new IllegalStateException(
+						"Unable create a default ApplicationContext, "
+								+ "please specify an ApplicationContextClass",
+						ex);
+			}
+		}
+		return (ConfigurableApplicationContext) BeanUtils.instantiateClass(contextClass);
+	}
 	......
 
 }
