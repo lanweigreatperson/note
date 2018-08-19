@@ -278,6 +278,31 @@ $ git stash list
 $ git stash apply stash@{0}
 ```
 
+**Git更新远程仓库代码到本地**
+
+~~~sh
+查看远程分支
+$ git remote -v 
+origin  https://github.com/lanweigreatperson/note (fetch)
+origin  https://github.com/lanweigreatperson/note (push)
+从远程获取最新版本到本地 temp分支
+$ git fetch origin master:temp
+From https://github.com/lanweigreatperson/note
+ * [new branch]      master     -> temp
+比较本地仓库与下载的temp分支
+$ git diff temp
+合并temp分支到本地的master分支
+$ git merge temp
+Already up-to-date.
+删除temp分支
+$ git branch -d temp
+Deleted branch temp (was 7027a2a).
+
+
+~~~
+
+
+
 **Feature分支**
 
 现在，你终于接到了一个新任务：开发代号为Vulcan的新功能，该功能计划用于下一代星际飞船。
