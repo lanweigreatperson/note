@@ -1,6 +1,8 @@
+#### 深入理解volatile
+
 此[文章](https://mp.weixin.qq.com/s/jSDAHKHWogeNU41ZS-fUwA)转载Hollis公众号。
 
-在[再有人问你Java内存模型是什么，就把这篇文章发给他](http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650121599&idx=1&sn=42b2cfabfb3057ac6c09026a8b9656cd&chksm=f36bb85ec41c31489e461a53e78f2959f0224c87c312724f420265b70e67e4efdae2331155aa&scene=21#wechat_redirect)中我们曾经介绍过，Java语言为了解决并发编程中存在的原子性、可见性和有序性问题，提供了一系列和并发处理相关的关键字，比如synchronized、volatile、final、concurren包等。在[前一篇](http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650121805&idx=1&sn=8aea8c329a018c82a7ebfe80ec604226&chksm=f36bbb6cc41c327acc23d3d7cdf0b785e318d8e970d564ba9ce8b28a1ae6b41499d351497af3&scene=21#wechat_redirect)文章中，我们也介绍了synchronized的用法及原理。本文，来分析一下另外一个关键字——volatile。
+在[再有人问你Java内存模型是什么，就把这篇文章发给他](http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650121599&idx=1&sn=42b2cfabfb3057ac6c09026a8b9656cd&chksm=f36bb85ec41c31489e461a53e78f2959f0224c87c312724f420265b70e67e4efdae2331155aa&scene=21#wechat_redirect)中我们曾经介绍过，Java语言为了解决并发编程中存在的原子性、可见性和有序性问题，提供了一系列和并发处理相关的关键字，比如`synchronized`、`volatile`、`final`、`concurrent`包等。在[前一篇](http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650121805&idx=1&sn=8aea8c329a018c82a7ebfe80ec604226&chksm=f36bbb6cc41c327acc23d3d7cdf0b785e318d8e970d564ba9ce8b28a1ae6b41499d351497af3&scene=21#wechat_redirect)文章中，我们也介绍了synchronized的用法及原理。本文，来分析一下另外一个关键字——volatile。
 
 本文就围绕`volatile`展开，主要介绍`volatile`的用法、`volatile`的原理，以及`volatile`是如何提供可见性和有序性保障的等。
 
@@ -35,9 +37,9 @@ public class Singleton {
 
 在[再有人问你Java内存模型是什么，就把这篇文章发给他](http://mp.weixin.qq.com/s?__biz=MzI3NzE0NjcwMg==&mid=2650121599&idx=1&sn=42b2cfabfb3057ac6c09026a8b9656cd&chksm=f36bb85ec41c31489e461a53e78f2959f0224c87c312724f420265b70e67e4efdae2331155aa&scene=21#wechat_redirect)中我们曾经介绍过，为了提高处理器的执行速度，在处理器和内存之间增加了多级缓存来提升。但是由于引入了多级缓存，就存在缓存数据不一致问题。
 
-但是，对于`volatile`变量，当对`volatile`变量进行写操作的时候，JVM会向处理器发送一条lock前缀的指令，将这个缓存中的变量回写到系统主存中。
+但是，对于`volatile`变量，当对`volatile`变量进行写操作的时候，JVM会向处理器发送一条`lock`前缀的指令，将这个缓存中的变量回写到系统主存中。
 
-但是就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题，所以在多处理器下，为了保证各个处理器的缓存是一致的，就会实现`缓存一致性协议`
+但是就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题，所以在多处理器下，为了保证各个处理器的缓存是一致的，就会实现**缓存一致性协议**。
 
 **缓存一致性协议**：每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。
 
