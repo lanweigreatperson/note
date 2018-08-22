@@ -1,4 +1,4 @@
-### ArrayList源码分析
+### ArrayList源码分析 jdk1.8版本
 
 ##### 基本属性： 
 
@@ -22,7 +22,7 @@ public class ArrayList<E> extends AbstractList<E>
 
 注意：
 
-- `transient`关键字的作用：在采用**Java默认的**序列化机制的时候，被该关键字修饰的属性不会被序列化。
+- `transient`关键字的作用：在采用Java默认的序列化机制的时候，被该关键字修饰的属性不会被序列化。
 - `ArrayList`类实现了`java.io.Serializable`接口，即采用了Java默认的序列化机制
 - 上面的`elementData`属性采用了`transient`来修饰，表明其不使用Java默认的序列化机制来实例化，但是该属性是`ArrayList`的底层数据结构，在网络传输中一定需要将其序列化，之后使用的时候还需要反序列化，那不采用Java默认的序列化机制，那采用什么呢？还有种方式就是我们自己去实现`writeObject`和`readObject` ，直接在类中搜索果真`ArrayList`自己实现了序列化和反序列化的方法
 
@@ -392,4 +392,3 @@ public void sort(Comparator<? super E> c) {
 - `remove(int index)`不需要遍历数组，只需判断index是否符合条件即可，效率比remove(Object o)高
 - `contains(E)`需要遍历数组
 - 迭代器以及序列化的时候需要检验是否有`ConcurrentModificationException`异常
-
