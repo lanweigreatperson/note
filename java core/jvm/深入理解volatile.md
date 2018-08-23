@@ -117,7 +117,7 @@ public class Test {
 
 `i++`操作，一共有三个步骤：`load i` ，`add i` ,`save i`。在多线程场景中，如果这三个步骤无法按照顺序执行的话，那么就会出现问题。
 
-![img](https://mmbiz.qpic.cn/mmbiz_png/6fuT3emWI5LXCYVh1ESflFicJN6hzPKB6qC8ibibdyxoBA0NcDtCWcQmY92oyPOuphXUKxw5K3Jmiafh9vwR5k6u3Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1)
+![img](assets/640)
 
 如上图，两个线程同时执行`i++`操作，如果允许指令重排，我们期望的结果是3，但是实际执行结果可能是2，甚至可能是1。
 
