@@ -1,6 +1,6 @@
-**[Git](https://git-scm.com/docs)官网文档**
+### **[Git](https://git-scm.com/docs)官网文档**
 
-**Git安装**
+#### **Git安装**
 
 - [Mac](https://sourceforge.net/projects/git-osx-installer/files/git-2.18.0-intel-universal-mavericks.dmg/download?use_mirror=autoselect)
 - [Windows](https://github.com/git-for-windows/git/releases/download/v2.18.0.windows.1/Git-2.18.0-64-bit.exe)
@@ -12,7 +12,7 @@ $ git config --global user.name "Your Name"
 $ git config --global user.email "email@example.com"
 ~~~
 
-**创建版本库**
+#### **创建版本库**
 
 ```java
 --创建文件夹
@@ -29,7 +29,7 @@ git add readme.txt
 git commit -m "wrote a readme file"
 ```
 
-**时光穿梭**
+#### **时光穿梭**
 
 ~~~
 --命令可以让我们时刻掌握仓库当前的状态
@@ -38,7 +38,7 @@ git status
 git diff
 ~~~
 
-**版本回退**
+#### **版本回退**
 
 ~~~
 --查看提交历史
@@ -52,13 +52,13 @@ git reflog
 
 ~~~
 
-**工作区和暂存区**
+#### **工作区和暂存区**
 
-**管理修改**
+##### **管理修改**
 
 用`git diff HEAD -- readme.txt`命令可以查看工作区和版本库里面最新版本的区别 
 
-**撤销修改**
+##### **撤销修改**
 
 `git checkout -- file`可以丢弃工作区的修改 ,`git checkout -- file`命令中的`--`很重要，没有`--`，就变成了“切换到另一个分支”的命令 
 
@@ -66,7 +66,7 @@ git reflog
 
 `git reset`命令既可以回退版本，也可以把暂存区的修改回退到工作区。当我们用`HEAD`时，表示最新的版本 
 
-**删除文件**
+##### **删除文件**
 
 一种是从版本库中删除该文件，那就用命令`git rm`删掉 ,并且`git commit` 
 
@@ -74,13 +74,13 @@ git reflog
 
 `git checkout -- test.txt`
 
-**远程仓库**
+##### **远程仓库**
 
 - 创建SSH Key
   - 在用户主目录下，看看有没有.ssh目录，如果有，再看看这个目录下有没有`id_rsa`和`id_rsa.pub`这两个文件，如果已经有了，可直接跳到下一步 ，如果没有创建`ssh-keygen -t rsa -C "youremail@example.com"`注意换成自己的邮箱
   - 登陆GitHub，打开“Account settings”，“SSH Keys”页面，点“Add SSH Key”，填上任意Title，在Key文本框里粘贴`id_rsa.pub`文件的内容 
 
-**添加远程库** 
+##### **添加远程库** 
 
 - 在github上创建仓库，创建成功后根据提示将本地仓库推送至github上，也可以从github上克隆出新仓库
 
@@ -371,7 +371,7 @@ origin  git@github.com:michaelliao/learngit.git (fetch)
 origin  git@github.com:michaelliao/learngit.git (push)
 ```
 
-### 推送分支
+推送分支
 
 推送分支，就是把该分支上的所有本地提交推送到远程库。推送时，要指定本地分支，这样，Git就会把该分支推送到远程库对应的远程分支上：
 
@@ -490,7 +490,7 @@ To github.com:michaelliao/learngit.git
    7a5e5dd..57c53ab  dev -> dev
 ```
 
-### 小结
+#### 小结
 
 - 查看远程库信息，使用`git remote -v`；
 - 本地新建的分支如果不推送到远程，对其他人就是不可见的；
@@ -499,11 +499,9 @@ To github.com:michaelliao/learngit.git
 - 建立本地分支和远程分支的关联，使用`git branch --set-upstream branch-name origin/branch-name`；
 - 从远程抓取分支，使用`git pull`，如果有冲突，要先处理冲突
 
-**创建标签**
+### **创建标签**
 
-#### 创建标签
-
-阅读: 257249
+##### 创建标签
 
 ------
 
@@ -655,3 +653,23 @@ To github.com:michaelliao/learngit.git
 
 要看看是否真的从远程库删除了标签，可以登陆GitHub查看。
 
+#### 删除本地远程仓库地址
+
+~~~
+git remote rm origin
+~~~
+
+#### 添加远程仓库地址
+
+~~~ git remote add origin ***
+git remote add origin ***
+~~~
+
+#### git设置忽略文件和目录
+
+1. 创建.gitignore
+2. 修改文件，添加忽略正则
+
+#### 强制将本地和远程仓库关联
+
+git pull origin master --allow-unrelated-histories

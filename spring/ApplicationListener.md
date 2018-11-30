@@ -267,4 +267,46 @@ implements ConfigurableApplicationContext, DisposableBean{
 
 ~~~
 
-spring容器启动将会执行到`AbstractApplicationContext#refresh()`。由此可以看到spring事件的流程
+spring容器启动将会执行到`AbstractApplicationContext#refresh()`。由此可以看到spring事件的流程。
+
+下面写了一个demo看看，如何实现事件的异步。
+
+~~~java
+/**
+ * @Auther: lanwei
+ * @Date: 2018/11/1 23:38
+ * @Description:
+ */
+public class ApplicationListenerAsynTest {
+    public static void main(String[] args) {
+        final AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+        context.addApplicationListener(new ApplicationListener<ApplicationEvent>() {
+            @Override
+            public void onApplicationEvent(ApplicationEvent event) {
+                println(event.getSource().toString());
+            }
+        });
+        context.register(MyConfiguration.class);
+        context.refresh();
+        context.close();
+    }
+
+    @Configuration
+    public static class MyConfiguration {
+
+        @Bean
+        public SimpleApplicationEventMulticaster applicationEventMulticaster() {
+            SimpleApplicationEventMulticaster multicaster = new SimpleApplicationEventMulticaster();
+            multicaster.setTaskExecutor(new ThreadPoolExecutor(5, 10, 60, TimeUnit.SECONDS, new ArrayBlockingQueue<>(10)));
+            return multicaster;
+        }
+    }
+
+    private static void println(String message) {
+        System.out.printf("[线程 : %s] %s\n",
+                Thread.currentThread().getName(), // 当前线程名称
+                message);
+    }
+}
+~~~
+

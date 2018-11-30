@@ -176,6 +176,12 @@ svn git maven
 
 <http://explainshell.com/>
 
+## 30.查看占用磁盘空间
+
+df -h
+
+df /usr 可以查看文件夹挂在到哪个磁盘上
+
 ## 参考资料：
 
 [Linux端口被占用的解决(Error: JBoss port is in use. Please check)](http://www.hollischuang.com/archives/239)
