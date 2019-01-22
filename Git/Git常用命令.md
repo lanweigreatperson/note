@@ -301,6 +301,20 @@ Deleted branch temp (was 7027a2a).
 
 ~~~
 
+**git如何clone所有的远程分支**
+
+~~~sh
+cd git_work
+3. git clone http://myrepo.xxx.com/project/.git ,这样在git_work目录下得到一个project子目录
+4. cd project
+5. git branch -a，列出所有分支名称如下：
+remotes/origin/dev
+remotes/origin/release
+6. git checkout -b dev origin/dev，作用是checkout远程的dev分支，在本地起名为dev分支，并切换到本地的dev分支
+7. git checkout -b release origin/release，作用参见上一步解释
+8. git checkout dev，切换回dev分支，并开始开发。
+~~~
+
 
 
 **Feature分支**
@@ -490,6 +504,20 @@ To github.com:michaelliao/learngit.git
    7a5e5dd..57c53ab  dev -> dev
 ```
 
+#### 推送本地分支local_branch到远程分支 remote_branch
+
+​      a.远程已有remote_branch分支并且已经关联本地分支local_branch且本地已经切换到local_branch
+
+​          git push
+
+​     b.远程已有remote_branch分支但未关联本地分支local_branch且本地已经切换到local_branch
+
+​         git push -u origin/remote_branch
+
+​     c.远程没有有remote_branch分支并，本地已经切换到local_branch
+
+​        git push origin local_branch:remote_branch
+
 #### 小结
 
 - 查看远程库信息，使用`git remote -v`；
@@ -501,7 +529,7 @@ To github.com:michaelliao/learngit.git
 
 ### **创建标签**
 
-##### 创建标签
+#### 创建标签
 
 ------
 

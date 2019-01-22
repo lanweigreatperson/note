@@ -84,6 +84,8 @@ su -username
 
 `chmod 777 file.java` //file.java的权限-rwxrwxrwx，r表示读、w表示写、x表示可执行
 
+`chmod +x  *.sh`
+
 ## 13.压缩文件
 
 ```
